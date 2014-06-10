@@ -1,20 +1,66 @@
 # Reproducible Research: Peer Assessment 1
 
+```{r}
+Sys.setlocale("LC_TIME","English")
+```
+
 
 ## Loading and preprocessing the data
 
+```{r}
+    mT <- read.csv(file="./activity.csv")
+    steps <- matrix(mT$steps, nrow=288, ncol=61)
+    dates <- as.Date(mT$date[288*c(1:61)])
+    intervals <- mT$interval[1:288]
+```
 
 
 ## What is mean total number of steps taken per day?
 
+```{r}
+    TotalStepsPerDay <<- apply(steps,2,sum, na.rm=TRUE)
+    hist(TotalStepsPerDay,breaks=20, col="red", xlab="Steps", main="Total Steps per Day")
+```
 
+```{r}
+    meanTotalPearDay <<- (mean(TotalStepsPerDay))
+    medianTotalPerDay <<- (mean(TotalStepsPerDay))
+```
 
 ## What is the average daily activity pattern?
-
-
+```{r}
+    plot(TotalStepsPerDay,type="l")
+```
 
 ## Imputing missing values
-
-
+    
+```{r}
+    TotalDaysMissing = sum(apply(steps,2, function(x){return(sum(is.na(x))!=0)}))
+    medianPerInterval <- apply(steps, 1, median,na.rm=TRUE)
+    new_steps <- apply(steps, 2, function(x) {return(ifelse(is.na(x),medianPerInterval,x))})
+    NewTotalStepsPerDay <<- apply(new_steps,2,sum, na.rm=TRUE)
+    
+    hist(NewTotalStepsPerDay,breaks=20, col="blue", xlab="Steps", main="Total Steps per Day")
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+```{r}
+    par(mfrow=c(3,2))
+    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")],
+         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKDAYS")
+    
+    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")], 
+         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKENDS")
+    
+    summary(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")]) 
+    summary(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")])
+    
+    boxplot(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")], 
+            NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")])
+```
+
+```{r}
+Sys.setlocale("LC_TIME","Spanish_Spain.1252")
+```
+
