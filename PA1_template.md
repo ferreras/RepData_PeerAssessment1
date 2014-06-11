@@ -87,14 +87,14 @@ So, first calculate the median for each interval
 medianPerInterval <- apply(steps, 1, median,na.rm=TRUE)
 ```
 
-3 Create a new dataset that is equal to the original dataset but with the missing data filled in.  
+3 Create a new dataset that is equal to the original dataset but with the missing data filled in:
 
 
 ```r
 new_steps <- apply(steps, 2, function(x) ifelse(is.na(x),medianPerInterval,x))
 ```
 
-4 Make a histogram of the total number of steps taken each day
+4 Make a histogram of the total number of steps taken each day:
 
 
 ```r
@@ -121,7 +121,7 @@ These values **do not** differ significatively from the estimates from the first
 
 For this part we'll use the new_steps, with the filled-in missing values  
 
-1 Create a new factor variable in the dataset with two levels  weekday and weekend indicating whether a given date is a weekday or weekend day.  
+1 Create a new factor variable in the dataset with two levels  weekday and weekend indicating whether a given date is a weekday or weekend day:  
 
 
 ```r
@@ -131,7 +131,7 @@ MeanPerIntervalWeekDays <- apply(new_steps[,daytype=="WeekDay"], 1, mean)
 MeanPerIntervalWeekEnds <- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
 ```
 
-2 Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+2 Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the number of steps taken, averaged across all weekday days or weekend days (y-axis):
 
 
 ```r
@@ -145,6 +145,6 @@ plot(intervals, MeanPerIntervalWeekEnds, type="l", xlab="Interval",
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
 
 
-**Conclusion:** The two patterns differ considerably, both in shape and values
+**Conclusion:** The two patterns differ considerably, both in shape and values.
 
 
