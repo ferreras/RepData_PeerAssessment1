@@ -1,7 +1,9 @@
+library(lattice)
+
 fn <- function(){
     Sys.setlocale("LC_TIME","English")
     
-    par(mfrow=c(3,2))
+    par(mfrow=c(2,1))
     ## Loading and preprocessing the data
     ## Load the data (i.e. read.csv()
     ## Process/transform the data (if necessary) into a format suitable for your analysis
@@ -48,31 +50,33 @@ fn <- function(){
     NewTotalStepsPerDay <<- apply(new_steps,2,sum, na.rm=TRUE)
     
     hist(NewTotalStepsPerDay,breaks=20, col="blue", xlab="Steps", main="Total Steps per Day")
-    
+
     ## Are there differences in activity patterns between weekdays and weekends?
 
-    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")],
-         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKDAYS")
+#    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")],
+#         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKDAYS")
     
-    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")],
-         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKENDS")
+#    hist(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")],
+#         breaks=20, col="blue", xlab="Steps", main="Total Steps per WEEKENDS")
     
-    boxplot(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")], 
-            NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")])
+#    boxplot(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")], 
+#            NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")])
     
-    boxplot(log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")]), 
-            log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")]))
+#    boxplot(log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")]), 
+#            log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")]))
+
+#    par(mfrow=c(1,2))
+    daytype <<- factor(x=weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun"),
+                       levels=c(TRUE,FALSE), labels=c("WeekEnd", "WeekDay"))
     
-    par(mfrow=c(1,2))
-    
-    WD <- weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")
-    WE <- weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")
-    
-    MeanPerIntervalWeekDays <- apply(new_steps[,WD], 1, mean)
-    MeanPerIntervalWeekEnds <- apply(new_steps[,WE], 1, mean)
-    
-    plot(intervals, MeanPerIntervalWeekDays, type="l")
-    plot(intervals, MeanPerIntervalWeekEnds, type="l")
+    MeanPerIntervalWeekDays <- apply(new_steps[,daytype=="WeekDay"], 1, mean)
+    MeanPerIntervalWeekEnds <- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
+    # Make a panel plot
+
+    print("hola")
+    xyplot(daytype ~ MeanPerIntervalWeekDays)
+#    plot(intervals, MeanPerIntervalWeekDays, type="l")
+#    plot(intervals, MeanPerIntervalWeekEnds, type="l")
     
     
     Sys.setlocale("LC_TIME","Spanish_Spain.1252")

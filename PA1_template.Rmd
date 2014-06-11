@@ -110,11 +110,10 @@ For this part we'll use the new_steps, with the filled-in missing values
 1 Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.  
 
 ```{r}
-daytype <<- factor(x=weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun"),
+daytype <- factor(x=weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun"),
                    levels=c(TRUE,FALSE), labels=c("WeekEnd", "WeekDay"))
-daytype
-MeanPerIntervalWeekDays <<- apply(new_steps[,daytype=="WeekDay"], 1, mean)
-MeanPerIntervalWeekEnds <<- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
+MeanPerIntervalWeekDays <- apply(new_steps[,daytype=="WeekDay"], 1, mean)
+MeanPerIntervalWeekEnds <- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
 
 ```
 

@@ -125,26 +125,10 @@ For this part we'll use the new_steps, with the filled-in missing values
 
 
 ```r
-daytype <<- factor(x=weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun"),
+daytype <- factor(x=weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun"),
                    levels=c(TRUE,FALSE), labels=c("WeekEnd", "WeekDay"))
-daytype
-```
-
-```
-##  [1] WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay
-##  [9] WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay
-## [17] WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay
-## [25] WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay
-## [33] WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay
-## [41] WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd
-## [49] WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd
-## [57] WeekDay WeekDay WeekDay WeekDay WeekDay
-## Levels: WeekEnd WeekDay
-```
-
-```r
-MeanPerIntervalWeekDays <<- apply(new_steps[,daytype=="WeekDay"], 1, mean)
-MeanPerIntervalWeekEnds <<- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
+MeanPerIntervalWeekDays <- apply(new_steps[,daytype=="WeekDay"], 1, mean)
+MeanPerIntervalWeekEnds <- apply(new_steps[,daytype=="WeekEnd"], 1, mean)
 ```
 
 2 Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).

@@ -277,24 +277,10 @@ medianTotalPerDay &lt;- (median(TotalStepsPerDay))
 
 <p>1 Create a new factor variable in the dataset with two levels  weekday and weekend indicating whether a given date is a weekday or weekend day.  </p>
 
-<pre><code class="r">daytype &lt;&lt;- factor(x=weekdays(dates,abbreviate=TRUE) %in% c(&quot;Sat&quot;,&quot;Sun&quot;),
+<pre><code class="r">daytype &lt;- factor(x=weekdays(dates,abbreviate=TRUE) %in% c(&quot;Sat&quot;,&quot;Sun&quot;),
                    levels=c(TRUE,FALSE), labels=c(&quot;WeekEnd&quot;, &quot;WeekDay&quot;))
-daytype
-</code></pre>
-
-<pre><code>##  [1] WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay
-##  [9] WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay
-## [17] WeekDay WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay
-## [25] WeekDay WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay
-## [33] WeekDay WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay
-## [41] WeekEnd WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd
-## [49] WeekEnd WeekDay WeekDay WeekDay WeekDay WeekDay WeekEnd WeekEnd
-## [57] WeekDay WeekDay WeekDay WeekDay WeekDay
-## Levels: WeekEnd WeekDay
-</code></pre>
-
-<pre><code class="r">MeanPerIntervalWeekDays &lt;&lt;- apply(new_steps[,daytype==&quot;WeekDay&quot;], 1, mean)
-MeanPerIntervalWeekEnds &lt;&lt;- apply(new_steps[,daytype==&quot;WeekEnd&quot;], 1, mean)
+MeanPerIntervalWeekDays &lt;- apply(new_steps[,daytype==&quot;WeekDay&quot;], 1, mean)
+MeanPerIntervalWeekEnds &lt;- apply(new_steps[,daytype==&quot;WeekEnd&quot;], 1, mean)
 </code></pre>
 
 <p>2 Make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).</p>
