@@ -39,7 +39,7 @@ fn <- function(){
     medianPerInterval <- apply(steps, 1, median,na.rm=TRUE)
         
     # Create a new dataset that is equal to the original dataset but with the missing data filled in.
-    new_steps <- apply(steps, 2, function(x) {return(ifelse(is.na(x),medianPerInterval,x))})
+    new_steps <<- apply(steps, 2, function(x) {return(ifelse(is.na(x),medianPerInterval,x))})
     
     # Make a histogram of the total number of steps taken each day and 
     # Calculate and report the mean and median total number of steps taken per day. 
@@ -62,6 +62,18 @@ fn <- function(){
     
     boxplot(log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")]), 
             log(NewTotalStepsPerDay[weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")]))
+    
+    par(mfrow=c(1,2))
+    
+    WD <- weekdays(dates,abbreviate=TRUE) %in% c("Mon","Tue","Wed","Thu","Fri")
+    WE <- weekdays(dates,abbreviate=TRUE) %in% c("Sat","Sun")
+    
+    MeanPerIntervalWeekDays <- apply(new_steps[,WD], 1, mean)
+    MeanPerIntervalWeekEnds <- apply(new_steps[,WE], 1, mean)
+    
+    plot(intervals, MeanPerIntervalWeekDays, type="l")
+    plot(intervals, MeanPerIntervalWeekEnds, type="l")
+    
     
     Sys.setlocale("LC_TIME","Spanish_Spain.1252")
 }
